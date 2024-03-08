@@ -1,0 +1,425 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "DocumentaciÃ³n de la API de Alquileres",
+    "description": "API que gestiona alquileres",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8081"
+    }
+  ],
+  "paths": {
+    "/alquileres/": {
+      "get": {
+        "summary": "Obtener todos los alquileres",
+        "operationId": "getAllAlquileres",
+        "responses": {
+          "200": {
+            "description": "Respuesta exitosa",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "idCliente": "Cliente1",
+                    "estado": 1,
+                    "fechaHoraRetiro": "2023-01-01T12:00:00",
+                    "fechaHoraDevolucion": "2023-01-02T12:00:00",
+                    "monto": 50,
+                    "estacionRetiroId": 1,
+                    "estacionDevolucionId": 2,
+                    "tarifaId": 1
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear un nuevo alquiler",
+        "operationId": "createAlquiler",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "idCliente": "NuevoCliente",
+                "estado": 1,
+                "fechaHoraRetiro": "2023-01-03T12:00:00",
+                "fechaHoraDevolucion": "2023-01-04T12:00:00",
+                "monto": 60,
+                "estacionRetiroId": 2,
+                "estacionDevolucionId": 3,
+                "tarifaId": 2
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Alquiler creado exitosamente",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 2,
+                  "idCliente": "NuevoCliente",
+                  "estado": 1,
+                  "fechaHoraRetiro": "2023-01-03T12:00:00",
+                  "fechaHoraDevolucion": "2023-01-04T12:00:00",
+                  "monto": 60,
+                  "estacionRetiroId": 2,
+                  "estacionDevolucionId": 3,
+                  "tarifaId": 2
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alquileres/{id}": {
+      "get": {
+        "summary": "Obtener un alquiler por ID",
+        "operationId": "getAlquilerById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta exitosa",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "idCliente": "Cliente1",
+                  "estado": 1,
+                  "fechaHoraRetiro": "2023-01-01T12:00:00",
+                  "fechaHoraDevolucion": "2023-01-02T12:00:00",
+                  "monto": 50,
+                  "estacionRetiroId": 1,
+                  "estacionDevolucionId": 2,
+                  "tarifaId": 1
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alquileres/filtrar-por-monto": {
+      "get": {
+        "summary": "Filtrar alquileres por monto",
+        "operationId": "filtrarPorMonto",
+        "parameters": [
+          {
+            "name": "montoMinimo",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta exitosa",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "idCliente": "Cliente1",
+                    "estado": 1,
+                    "fechaHoraRetiro": "2023-01-01T12:00:00",
+                    "fechaHoraDevolucion": "2023-01-02T12:00:00",
+                    "monto": 50,
+                    "estacionRetiroId": 1,
+                    "estacionDevolucionId": 2,
+                    "tarifaId": 1
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alquileres/filtrar-por-estado": {
+      "get": {
+        "summary": "Filtrar alquileres por estado",
+        "operationId": "filtrarPorEstado",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta exitosa",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "idCliente": "Cliente1",
+                    "estado": 1,
+                    "fechaHoraRetiro": "2023-01-01T12:00:00",
+                    "fechaHoraDevolucion": "2023-01-02T12:00:00",
+                    "monto": 50,
+                    "estacionRetiroId": 1,
+                    "estacionDevolucionId": 2,
+                    "tarifaId": 1
+                  },
+                  {
+                    "id": 2,
+                    "idCliente": "Cliente2",
+                    "estado": 2,
+                    "fechaHoraRetiro": "2023-01-03T12:00:00",
+                    "fechaHoraDevolucion": "2023-01-04T12:00:00",
+                    "monto": 60,
+                    "estacionRetiroId": 2,
+                    "estacionDevolucionId": 3,
+                    "tarifaId": 2
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alquileres/nuevoalquiler": {
+      "post": {
+        "summary": "Crear un nuevo alquiler",
+        "operationId": "createNewRent",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "idCliente": "NuevoCliente",
+                "estado": 1,
+                "fechaHoraRetiro": "2023-01-05T12:00:00",
+                "fechaHoraDevolucion": "2023-01-06T12:00:00",
+                "monto": 70,
+                "estacionRetiroId": 3,
+                "estacionDevolucionId": 4,
+                "tarifaId": 3
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Alquiler creado exitosamente",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 3,
+                  "idCliente": "NuevoCliente",
+                  "estado": 1,
+                  "fechaHoraRetiro": "2023-01-05T12:00:00",
+                  "fechaHoraDevolucion": "2023-01-06T12:00:00",
+                  "monto": 70,
+                  "estacionRetiroId": 3,
+                  "estacionDevolucionId": 4,
+                  "tarifaId": 3
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/alquileres/finalizaralquiler/{id}/{idEstacion}": {
+      "patch": {
+        "summary": "Finalizar un alquiler",
+        "operationId": "finishRent",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "idEstacion",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "example": {
+                "tipoMoneda": "USD"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Alquiler finalizado exitosamente",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "idCliente": "Cliente1",
+                  "estado": 1,
+                  "fechaHoraRetiro": "2023-01-01T12:00:00",
+                  "fechaHoraDevolucion": "2023-01-02T12:00:00",
+                  "monto": 50,
+                  "estacionRetiroId": 1,
+                  "estacionDevolucionId": 2,
+                  "tarifaId": 1,
+                  "tipoMoneda": "USD"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AlquilerDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "idCliente": {
+            "type": "string"
+          },
+          "estado": {
+            "type": "integer"
+          },
+          "fechaHoraRetiro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaHoraDevolucion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "monto": {
+            "type": "number",
+            "format": "float"
+          },
+          "estacionRetiroId": {
+            "type": "integer"
+          },
+          "estacionDevolucionId": {
+            "type": "integer"
+          },
+          "tarifaId": {
+            "type": "integer"
+          }
+        }
+      },
+      "AlquilerFinalizadoDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "idCliente": {
+            "type": "string"
+          },
+          "estado": {
+            "type": "integer"
+          },
+          "fechaHoraRetiro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "fechaHoraDevolucion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "tipoMoneda": {
+            "type": "string"
+          },
+          "monto": {
+            "type": "number",
+            "format": "float"
+          },
+          "estacionRetiroId": {
+            "type": "integer"
+          },
+          "estacionDevolucionId": {
+            "type": "integer"
+          },
+          "tarifaId": {
+            "type": "integer"
+          }
+        }
+      },
+      "TarifaDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "tipoTarifa": {
+            "type": "integer"
+          },
+          "definicion": {
+            "type": "string"
+          },
+          "diaSemana": {
+            "type": "integer"
+          },
+          "diaMes": {
+            "type": "integer"
+          },
+          "mes": {
+            "type": "integer"
+          },
+          "anio": {
+            "type": "integer"
+          },
+          "montoFijoAlquiler": {
+            "type": "number",
+            "format": "float"
+          },
+          "montoMinutoFraccion": {
+            "type": "number",
+            "format": "float"
+          },
+          "montoKm": {
+            "type": "number",
+            "format": "float"
+          },
+          "montoHora": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      }
+    }
+  }
+}

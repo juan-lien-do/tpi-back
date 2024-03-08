@@ -1,0 +1,201 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Documentación de la API de Estaciones",
+    "description": "API que gestiona estaciones",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8082"
+    }
+  ],
+  "paths": {
+    "/estaciones/": {
+      "get": {
+        "summary": "Obtener todas las estaciones",
+        "operationId": "getAllEstaciones",
+        "responses": {
+          "200": {
+            "description": "Respuesta exitosa",
+            "content": {
+              "application/json": {
+                "example": [
+                  {
+                    "id": 1,
+                    "nombre": "Estacion1",
+                    "fechaHoraCreacion": "2023-01-01T12:00:00",
+                    "latitud": -34.6037,
+                    "longitud": -58.3816
+                  },
+                  {
+                    "id": 2,
+                    "nombre": "Estacion2",
+                    "fechaHoraCreacion": "2023-01-02T12:00:00",
+                    "latitud": -34.6038,
+                    "longitud": -58.3817
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Crear una nueva estación",
+        "operationId": "createEstacion",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "example": {
+                "nombre": "NuevaEstacion",
+                "latitud": -34.6039,
+                "longitud": -58.3818
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Estación creada exitosamente",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 3,
+                  "nombre": "NuevaEstacion",
+                  "fechaHoraCreacion": "2023-01-03T12:00:00",
+                  "latitud": -34.6039,
+                  "longitud": -58.3818
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/estaciones/{id}": {
+      "get": {
+        "summary": "Obtener una estación por ID",
+        "operationId": "getEstacionById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta exitosa",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "nombre": "Estacion1",
+                  "fechaHoraCreacion": "2023-01-01T12:00:00",
+                  "latitud": -34.6037,
+                  "longitud": -58.3816
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/estaciones/cercana/{latitud}/{longitud}": {
+      "get": {
+        "summary": "Obtener la estación más cercana",
+        "operationId": "getClosestEstacion",
+        "parameters": [
+          {
+            "name": "latitud",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "float"
+            },
+            "description": "Latitud de la ubicación"
+          },
+          {
+            "name": "longitud",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "float"
+            },
+            "description": "Longitud de la ubicación"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Respuesta exitosa",
+            "content": {
+              "application/json": {
+                "example": {
+                  "id": 1,
+                  "nombre": "EstacionCercana",
+                  "fechaHoraCreacion": "2023-01-01T12:00:00",
+                  "latitud": -34.604,
+                  "longitud": -58.3819
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "cors": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Access-Control-Allow-Headers"
+      }
+    },
+    "schemas": {
+      "EstacionDTO": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "fechaHoraCreacion": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "latitud": {
+            "type": "number",
+            "format": "float"
+          },
+          "longitud": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      },
+      "PuntoDTO": {
+        "type": "object",
+        "properties": {
+          "longitud": {
+            "type": "number",
+            "format": "float"
+          },
+          "latitud": {
+            "type": "number",
+            "format": "float"
+          }
+        }
+      }
+    }
+  }
+}
